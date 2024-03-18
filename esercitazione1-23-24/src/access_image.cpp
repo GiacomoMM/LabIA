@@ -57,5 +57,5 @@ void copy_image(Image &to, const Image &from) {
     //NOT_IMPLEMENTED();
     to.w=from.w;
     to.h=from.h;
-    memcpy(to.data,from.data,sizeof(from.data));
+    memcpy(to.data,from.data,from.w * from.h * from.c * sizeof(float));
 }

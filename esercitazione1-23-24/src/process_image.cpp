@@ -120,29 +120,33 @@ void rgb_to_hsv(Image &im) {
             V=max(R,G,B);
             m=min(R,G,B);
             C=V-m;
+
             if(V!=0)
                 S=C/V;
             else
                 S=0;
+
             if(V==R)
                 H=(G-B)/C;
             else if(V==G)
                 H=((B-R)/C)+2;
             else if(V==B)
                 H=((R-G)/C)+4;
-            //else    
-               // H=NULL;
-            if(H!=NULL && H<0)
+
+            if(H<0)
                 H=(H/6)+1;
-            else if(H!=NULL)
+            else if(H>=0)
                 H=(H/6);
-            //while(H<0)
-               // H++;
+            else 
+                H=0;
             im(i,j,0)=H;
             im(i,j,1)=S;
             im(i,j,2)=V;
+            //
+                //printf("valore pixel H=%lf\n",im(i,j,0));
         }
     }
+    
 }
 
 // HW0 #7
@@ -159,34 +163,35 @@ void hsv_to_rgb(Image &im) {
             S=im(i,j,1);
             V=im(i,j,2);
             C = V * S;
-            X = C * (1 - abs(fmod(6*H,2.0) - 1));
+            X = C * (1 - fabs(fmod(6*H,2) - 1));
             m = V - C;
-            if(H>=0 && H<1/6){
+            //eseguire divisioni in virgola mobile non in interi altrimenti non è precisa la suddivisione
+            if(H>=0 && H<1.0/6.0){
                 R=C;
                 G=X;
                 B=0;
             }
-            else if(H>=1/6 && H<2/6){
+            else if(H>=1.0/6.0 && H<2.0/6.0){
                 R=X;
                 G=C;
                 B=0;
             }
-            else if(H>=2/6 && H<3/6){
+            else if(H>=2.0/6.0 && H<3.0/6.0){
                 R=0;
                 G=C;
                 B=X;
             }
-            else if(H>=3/6 && H<4/6){
+            else if(H>=3.0/6.0 && H<4.0/6.0){
                 R=0;
                 G=X;
                 B=C;
             }
-            else if(H>=4/6 && H<5/6){
+            else if(H>=4.0/6.0 && H<5.0/6.0){
                 R=X;
                 G=0;
                 B=C;
             }
-            else if(H>=5/6 && H<1){
+            else if(H>=5.0/6.0 && H<1){
                 R=C;
                 G=0;
                 B=X;

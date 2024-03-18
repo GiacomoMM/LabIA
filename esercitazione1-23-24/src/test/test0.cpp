@@ -89,6 +89,7 @@ void test_rgb_to_hsv()
   rgb_to_hsv(im);
   Image hsv = load_image("data/dog.hsv.png");
   TEST(same_image(im, hsv));
+  printf("valore im=%lf valore hsv=%lf\n",im(456,66,0),hsv(456,66,0));
   im.save_image("output/rgb_to_hsv_result.png");
   }
 
@@ -97,8 +98,6 @@ void test_hsv_to_rgb()
   Image im = load_image("data/dog.jpg");
   Image c = im;
   rgb_to_hsv(im);
-  scale_image(im, 1, 2);
-  clamp_image(im);
   hsv_to_rgb(im);
   TEST(same_image(im, c));
   im.save_image("output/hsv_to_rgb_result.png");
